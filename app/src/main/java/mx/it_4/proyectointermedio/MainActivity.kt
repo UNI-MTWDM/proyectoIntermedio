@@ -1,6 +1,7 @@
 package mx.it_4.proyectointermedio
 
-import Modelo.RickAndMortyApiService
+import android.content.Intent
+import modelos.RickAndMortyApiService
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,16 +13,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import modelos.RickAndMortyCharacter
+import java.io.ByteArrayOutputStream
+import java.io.ObjectOutputStream
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var ApiService: RickAndMortyApiService
+    private lateinit var service: RickAndMortyApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        ApiService = RickAndMortyApiService()
+        service = RickAndMortyApiService()
 
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val txtId: EditText = findViewById(R.id.IdPersonaje)
@@ -29,32 +32,37 @@ class MainActivity : AppCompatActivity() {
 
         btnSearch.setOnClickListener{
             progressBar.visibility = View.VISIBLE
-            var id = txtId.text.toString()
-            getCharacter(id)
+            val id = txtId.text.toString()
 
-        }
-    }
+            GlobalScope.launch (Dispatchers.IO){
+                try {
+                    val character = service.fetchCharacterInfo(id)
+                    Log.i("RyM Id", character.image)
 
-    private fun getCharacter(id: String) {
-        GlobalScope.launch (Dispatchers.IO){
-            try {
-                val character = ApiService.RickAndMortyApi(id)
-                Log.i("RyM Id", character.Id.toString())
-                Log.d("RyM Id", character.Id.toString())
-                Log.i("RyM Name", character.Name)
-                Log.d("RyM Name", character.Name)
-                withContext(Dispatchers.Main){
-                    // TODO Actualizar GUI
+                    withContext(Dispatchers.Main) {
+                        progressBar.visibility = View.INVISIBLE
+
+                        val intent = Intent(this@MainActivity, CharacterInfo::class.java)
+                        val datos = arrayOf(character)
+                        intent.putExtra("datos", serializeArray(datos))
+                        startActivity(intent)
+                    }
+                }
+                catch (e: Exception){
+                    // Manejar el error
+                    Log.d("Seccion", "Sección Error")
+                    Log.d("Error: ", e.message.toString())
                 }
             }
-            catch (e: Exception){
-                // Manejar el error
-                Log.d("Seccion", "Sección Error")
-                Log.d("Error: ", e.message.toString())
-            }
         }
-
-
     }
 
+    fun serializeArray(datos: Array<RickAndMortyCharacter>): ByteArray {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        val objectOutputStream = ObjectOutputStream(byteArrayOutputStream)
+        objectOutputStream.writeObject(datos)
+        objectOutputStream.close()
+
+        return byteArrayOutputStream.toByteArray()
+    }
 }

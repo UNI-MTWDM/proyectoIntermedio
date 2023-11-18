@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">proyectoIntermedio</string>
+    <string name="imageViewCharacter">Imagen</string>
 </resources>

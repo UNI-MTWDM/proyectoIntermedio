@@ -1,19 +1,20 @@
-package Modelo
+package modelos
 
-import Interfaces.ApiService
+import interfaces.RickyAndMortyService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.Serializable
 
 class RickAndMortyApiService{
-    private val api: ApiService by lazy {
+    private val api: RickyAndMortyService by lazy {
         Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/character/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ApiService::class.java)
+            .create(RickyAndMortyService::class.java)
     }
-    suspend fun RickAndMortyApi(rymId: String): RickAndMortyApi{
-        return api.getRickAndMortyApi(rymId)
+    suspend fun fetchCharacterInfo(rymId: String): RickAndMortyCharacter{
+        return api.getCharacterInfo(rymId)
     }
 }
 
@@ -27,17 +28,17 @@ data class RickAndMortyCharacter(
     val origin: Origin,
     val location: Location,
     val image: String,
-    val episode: List<String>,
+    val episode: List<String> = emptyList(),
     val url: String,
     val created: String
-)
+): Serializable
 
 data class Origin(
     val name: String,
     val url: String
-)
+): Serializable
 
 data class Location(
     val name: String,
     val url: String
-)
+): Serializable
