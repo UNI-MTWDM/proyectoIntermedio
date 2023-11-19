@@ -27,11 +27,11 @@ class CharacterInfo:AppCompatActivity() {
             val origin = findViewById<TextView>(R.id.textViewOrigin)
             val location = findViewById<TextView>(R.id.textViewLocation)
 
-            status.text = datos[0].status
-            name.text = datos[0].name
-            species.text = datos[0].species
-            origin.text = datos[0].origin.name
-            location.text = datos[0].location.name
+            status.text = "Estatus: " + datos[0].status
+            name.text = "Nombre: " + datos[0].name
+            species.text = "Especie: " +datos[0].species
+            origin.text = "Origen: " + datos[0].origin.name
+            location.text = "Ubicación: " + datos[0].location.name
 
             val img = findViewById<ImageView>(R.id.imageViewCharacter)
             Glide.with(this)
