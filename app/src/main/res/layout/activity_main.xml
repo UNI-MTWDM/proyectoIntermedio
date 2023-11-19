@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="IdPersonaje" />
+        android:hint="IdPersonaje"
+        android:textColor="#b2daed" />
 
     <Button
         android:id="@+id/SearchButton"
