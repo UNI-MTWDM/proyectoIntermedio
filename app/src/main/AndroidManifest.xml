@@ -27,6 +27,10 @@
             android:exported="true"
             android:label="Character Info">
         </activity>
+        <activity android:name=".CharacterList"
+            android:exported="true"
+            android:label="Character List">
+        </activity>
     </application>
 
 </manifest>

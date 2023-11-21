@@ -1,28 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="30dp"
+    android:background="#303032"
     android:gravity="center"
-    android:background="#303032" >
+    android:orientation="vertical"
+    android:padding="30dp">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="141dp"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
-        android:id="@+id/IdPersonaje"
+        android:id="@+id/txtCharacterName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="IdPersonaje"
-        android:textColor="#b2daed" />
+        android:layout_height="48dp"
+        android:textColor="#b2daed"
+        android:hint="Nombre de personaje" />
 
     <Button
-        android:id="@+id/SearchButton"
+        android:id="@+id/btnSearchName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Buscar"
-        android:textSize="20dp"
-        android:textColor="#303032" />
+        android:textColor="#303032"
+        android:text="Búscar personaje" />
+
+    <EditText
+        android:id="@+id/txtTotalPersonajes"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:textColor="#b2daed"
+        android:hint="Número de personajes"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/btnSearchMany"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#303032"
+        android:text="Buscar personajes" />
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#303032"
+        android:text="Mostrar listado" />
 
     <ProgressBar
         android:id="@+id/progressBar"
